@@ -1,0 +1,35 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+
+    <bitmap id="lightning_1" filename="lightning_1.png"/>
+    <bitmap id="lightning_2" filename="lightning_2.png"/>
+    <bitmap id="lightning_3" filename="lightning_3.png"/>
+    <bitmap id="lightning_4" filename="lightning_4.png"/>
+    <bitmap id="lightning_5" filename="lightning_5.png"/>
+    <bitmap id="lightning_6" filename="lightning_6.png"/>
+
+    <bitmap id="dragonballs_1" filename="dragonballs_1.png"/>
+    <bitmap id="dragonballs_2" filename="dragonballs_2.png"/>
+    <bitmap id="dragonballs_3" filename="dragonballs_3.png"/>
+    <bitmap id="dragonballs_4" filename="dragonballs_4.png"/>
+    <bitmap id="dragonballs_5" filename="dragonballs_5.png"/>
+    <bitmap id="dragonballs_6" filename="dragonballs_6.png"/>
+    <bitmap id="dragonballs_7" filename="dragonballs_7.png"/>
+
+    <bitmap id="dragonradar" filename="dragonradar.png"/>
+
+    <bitmap id="goku_1" filename="1.png"/>
+    <bitmap id="goku_2" filename="2.png"/>
+    <bitmap id="goku_3" filename="3.png"/>
+    <bitmap id="goku_4" filename="4.png"/>
+    <bitmap id="goku_5" filename="5.png"/>
+    <bitmap id="goku_6" filename="6.png"/>
+    <bitmap id="goku_7" filename="7.png"/>
+    <bitmap id="goku_8" filename="8.png"/>
+    <bitmap id="goku_9" filename="9.png"/>
+    <bitmap id="goku_10" filename="10.png"/>
+    <bitmap id="goku_11" filename="11.png"/>
+    <bitmap id="goku_12" filename="12.png"/>
+
+    <bitmap id="background" filename="esprit.jpg"/>
+</drawables>
