@@ -1,0 +1,22 @@
+<strings>
+    <string id="day1">Dim</string>
+    <string id="day2">Lun</string>
+    <string id="day3">Mar</string>
+    <string id="day4">Mer</string>
+    <string id="day5">Jeu</string>
+    <string id="day6">Ven</string>
+    <string id="day7">Sam</string>
+
+    <string id="month1">Janv</string>
+    <string id="month2">Fev</string>
+    <string id="month3">Mars</string>
+    <string id="month4">Avr</string>
+    <string id="month5">Mai</string>
+    <string id="month6">Juin</string>
+    <string id="month7">Juil</string>
+    <string id="month8">Aout</string>
+    <string id="month9">Sept</string>
+    <string id="month10">Oct</string>
+    <string id="month11">Nov</string>
+    <string id="month12">Dec</string>
+</strings>

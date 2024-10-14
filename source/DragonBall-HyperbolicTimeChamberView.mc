@@ -3,7 +3,6 @@ import Toybox.Graphics;
 import Toybox.System;
 import Toybox.Lang;
 import Toybox.Time.Gregorian;
-import Toybox.Lang;
 
 class DragonBall_HyperbolicTimeChamberView extends WatchUi.WatchFace {
 
@@ -18,27 +17,49 @@ class DragonBall_HyperbolicTimeChamberView extends WatchUi.WatchFace {
 
     var frameLightning = 0;
 
-    var days = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
-    var months = ["Janv", "Fev", "Mars", "Avr", "Mai", "Juin", "Juil", "Aout", "Sept", "Oct", "Nov", "Dec"];
+    var characterPhases = new Array<CharacterPhase>[12];
+
+    var months = new Array<String>[12];
+    var days = new Array<String>[7];
 
     function initialize() {
         WatchFace.initialize();
 
         font = WatchUi.loadResource(Rez.Fonts.saiyan);
 
-        goku[0] = WatchUi.loadResource(Rez.Drawables.goku_1);
-        goku[1] = WatchUi.loadResource(Rez.Drawables.goku_2);
-        goku[2] = WatchUi.loadResource(Rez.Drawables.goku_3);
-        goku[3] = WatchUi.loadResource(Rez.Drawables.goku_4);
-        goku[4] = WatchUi.loadResource(Rez.Drawables.goku_5);
-        goku[5] = WatchUi.loadResource(Rez.Drawables.goku_6);
-        goku[6] = WatchUi.loadResource(Rez.Drawables.goku_7);
-        goku[7] = WatchUi.loadResource(Rez.Drawables.goku_8);
-        goku[8] = WatchUi.loadResource(Rez.Drawables.goku_9);
-        goku[9] = WatchUi.loadResource(Rez.Drawables.goku_10);
-        goku[10] = WatchUi.loadResource(Rez.Drawables.goku_11);
-        goku[11] = WatchUi.loadResource(Rez.Drawables.goku_12);
+        days[0] = WatchUi.loadResource(Rez.Strings.day1) as String;
+        days[1] = WatchUi.loadResource(Rez.Strings.day2) as String;
+        days[2] = WatchUi.loadResource(Rez.Strings.day3) as String;
+        days[3] = WatchUi.loadResource(Rez.Strings.day4) as String;
+        days[4] = WatchUi.loadResource(Rez.Strings.day5) as String;
+        days[5] = WatchUi.loadResource(Rez.Strings.day6) as String;
+        days[6] = WatchUi.loadResource(Rez.Strings.day7) as String;
+                 
+        months[0] = WatchUi.loadResource(Rez.Strings.month1) as String;
+        months[1] = WatchUi.loadResource(Rez.Strings.month2) as String;
+        months[2] = WatchUi.loadResource(Rez.Strings.month3) as String;
+        months[3] = WatchUi.loadResource(Rez.Strings.month4) as String;
+        months[4] = WatchUi.loadResource(Rez.Strings.month5) as String;
+        months[5] = WatchUi.loadResource(Rez.Strings.month6) as String;
+        months[6] = WatchUi.loadResource(Rez.Strings.month7) as String;
+        months[7] = WatchUi.loadResource(Rez.Strings.month8) as String;
+        months[8] = WatchUi.loadResource(Rez.Strings.month9) as String;
+        months[9] = WatchUi.loadResource(Rez.Strings.month10) as String;
+        months[10] = WatchUi.loadResource(Rez.Strings.month11) as String;
+        months[11] = WatchUi.loadResource(Rez.Strings.month12) as String;
 
+        characterPhases[0] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_1), NONE);
+        characterPhases[1] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_2), NONE);
+        characterPhases[2] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_3), NONE);
+        characterPhases[3] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_4), RED);
+        characterPhases[4] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_5), YELLOW);
+        characterPhases[5] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_5), YELLOW_BLUE);
+        characterPhases[6] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_7), YELLOW_BLUE);
+        characterPhases[7] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_8), RED);
+        characterPhases[8] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_9), RED);
+        characterPhases[9] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_10), BLUE);
+        characterPhases[10] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_11), RED);
+        characterPhases[11] = new CharacterPhase(WatchUi.loadResource(Rez.Drawables.goku_12), BLUE);
 
         lightningRed[0] = WatchUi.loadResource(Rez.Drawables.lightning_1);
         lightningRed[1] = WatchUi.loadResource(Rez.Drawables.lightning_2);
@@ -83,7 +104,7 @@ class DragonBall_HyperbolicTimeChamberView extends WatchUi.WatchFace {
         dc.clear();
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
 
-        var frameProgress = min((goku.size() - 1) * activity.steps / activity.stepGoal, goku.size() - 1);
+        var frameProgress = min((characterPhases.size() - 1) * activity.steps / activity.stepGoal, characterPhases.size() - 1);
 
         // ideal size for the temple is around for 240px res 215 bitmaps
         var initialBackgroundSize = 215;
@@ -99,9 +120,9 @@ class DragonBall_HyperbolicTimeChamberView extends WatchUi.WatchFace {
         var gokuScale = gokuSize / initialGokuSize.toFloat();
         gokuTransform.scale(gokuScale, gokuScale);
 
-        // Lightning shouyld be around 1.2x wider than goku
+        // Lightning shouyld be around 1.1x wider than goku
         var lightingTransform = new AffineTransform();
-        var lightningScale = gokuScale * 1.2;
+        var lightningScale = gokuScale * 1.1;
         var lightningSize = initialGokuSize * lightningScale;
         lightingTransform.scale(lightningScale, lightningScale);
         
@@ -109,30 +130,19 @@ class DragonBall_HyperbolicTimeChamberView extends WatchUi.WatchFace {
         var bottomGokuPercent = 0.9;
 
         dc.drawBitmap2(dc.getWidth() / 2 - backgroundSize / 2, topBackgroundPercent * dc.getHeight(), background, { :transform => backgroundTransform });
-        dc.drawBitmap2(dc.getWidth() / 2 - gokuSize / 2, bottomGokuPercent * dc.getHeight() - gokuSize, goku[frameProgress], { :transform => gokuTransform });
+        dc.drawBitmap2(dc.getWidth() / 2 - gokuSize / 2, bottomGokuPercent * dc.getHeight() - gokuSize, characterPhases[frameProgress].drawable, { :transform => gokuTransform });
 
-        if(frameProgress == 3){
+        // Draw lightnings
+        if(characterPhases[frameProgress].aura & RED == RED){
             dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningRed[frameLightning], { :transform => lightingTransform });
-        }else if(frameProgress == 4){
+        }
+        if(characterPhases[frameProgress].aura & YELLOW == YELLOW){
             dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningYellow[frameLightning], { :transform => lightingTransform });
-        }else if(frameProgress == 5){
-            dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningYellow[frameLightning], { :transform => lightingTransform });
-            dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningBlue[frameLightning], { :transform => lightingTransform });
-        }else if(frameProgress == 6){
-            dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningYellow[frameLightning], { :transform => lightingTransform });
-            dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningBlue[frameLightning], { :transform => lightingTransform });
-        }else if(frameProgress == 7){
-            dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningRed[frameLightning], { :transform => lightingTransform });
-        }else if(frameProgress == 8){
-            dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningRed[frameLightning], { :transform => lightingTransform });
-        }else if(frameProgress == 9){
-            dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningBlue[frameLightning], { :transform => lightingTransform });
-        }else if(frameProgress == 10){
-            dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningRed[frameLightning], { :transform => lightingTransform });
-        }else if(frameProgress == 11){
+        }
+        if(characterPhases[frameProgress].aura & BLUE == BLUE){
             dc.drawBitmap2(dc.getWidth() / 2 - lightningSize / 2, bottomGokuPercent * dc.getHeight() - lightningSize, lightningBlue[frameLightning], { :transform => lightingTransform });
         }
-
+        
         var radius = (dc.getHeight() - 20 - 5) / 2; // 20 is dragonball size, 5 is small padding
         var angleRange = Math.PI * 0.5;
         var dragonballTransform = new AffineTransform();  
